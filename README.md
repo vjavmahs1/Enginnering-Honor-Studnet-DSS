@@ -1,2 +1,16 @@
 # eh-DSS
 DSS for Engineering Honors
+
+
+Install needed packages and create virtual env
+>pipenv install
+
+Activate virtual env
+>pipenv shell
+
+Create db migrations then create db off that schema
+>python manage.py makemigrations\
+python manage.py migrate
+
+Get out of virtual env
+>exit
