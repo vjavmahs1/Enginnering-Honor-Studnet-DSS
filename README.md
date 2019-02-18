@@ -12,6 +12,9 @@ Create db migrations then create db off that schema
 >python manage.py makemigrations\
 python manage.py migrate
 
+Test (creates test db from migration and deletes said db after testing)
+>python manage.py test
+
 Load the seed data
 >python manage.py loaddata seed
 
