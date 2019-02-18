@@ -1,0 +1,50 @@
+- model: eh_app.Activity
+  pk: 1 # This is the primary key. Either id or the element signified as pk in the models file
+  fields:
+    date: 2019-2-18
+    location: ETB room 2001
+    details: Lecture by Prof. Pauline Wade
+    semester: 1 # Relates to primary key of the related element
+    requirement_satisfied: 1
+
+- model: eh_app.Requirement
+  pk: 1
+  fields:
+    code: AB
+    description: Must attend one seminar by a visiting lecturer.
+
+- model: eh_app.Semester
+  pk: 1
+  fields:
+    semester: Spring
+    academic_year: 2018-2019
+- model: eh_app.Semester
+  pk: 2
+  fields:
+    semester: Fall
+    academic_year: 2018-2019
+- model: eh_app.Semester
+  pk: 3
+  fields:
+    semester: Fall
+    academic_year: 2001-2002
+
+- model: eh_app.Teacher
+  pk: 1
+  fields:
+    uin: 123004567
+    first_name: William
+    last_name: Shatner
+
+- model: eh_app.Track
+  pk: EH-CSCE
+  fields:
+    name: CSCE Engineering Honors
+    semester_started: 3
+    requirements: 1 # Relates to TrackRequirements
+
+- model: eh_app.TrackRequirements
+  pk: 1
+  fields:
+    per_sem: 1
+    description: You must write a 10 page paper about a new emerging technology that you find fascinating.
