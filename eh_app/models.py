@@ -32,9 +32,10 @@ class Campus(models.Model):
 
 class Course(models.Model):
     class Meta:
-        unique_together = (('number', 'title'),)
+        unique_together = (('number', 'title', 'department'),)
 
-    number = models.PositiveIntegerField(primary_key=True)
+    # id autogen pk
+    number = models.PositiveIntegerField()
     title = models.CharField(max_length=45, default=None, null=True)
     credits = models.PositiveIntegerField()
     min_credits = models.PositiveIntegerField(default=None, null=True)
@@ -46,13 +47,13 @@ class Course(models.Model):
 
 class Department(models.Model):
     name = models.CharField(primary_key=True, max_length=7)
-    activities_per_semester = models.PositiveIntegerField()
+    activities_per_semester = models.FloatField()
     advising_per_semester = models.FloatField()
 
     # Relations
     activities = models.ManyToManyField('Activity', default=None)
     advisors = models.ManyToManyField('Advisor', default=None)
-    track = models.ForeignKey('Track', on_delete=None)
+    track = models.ForeignKey('Track', default=None, null=True, on_delete=None)
     # FIXME: Is the following necessary?
     required_activities = models.ManyToManyField(
         'Activity',
@@ -60,10 +61,10 @@ class Department(models.Model):
         default=None,
     )
 
-    def activities_per_year(self):
+    def activities_per_year(self): # pragma: no cover
         return self.activities_per_semester * 2
 
-    def advising_per_year(self):
+    def advising_per_year(self): # pragma: no cover
         return self.advising_per_semester * 2
 
 class Exception(models.Model):
@@ -193,10 +194,12 @@ class StudentSectionEnrollment(models.Model):
     # Relations
     section = models.ForeignKey('Section', on_delete=None)
     student = models.ForeignKey('Student', on_delete=None)
-    semester = models.ForeignKey('Semester', on_delete=None)
+
+    def semester(self):
+        return self.section.semester
 
     def credits(self):
-        return self.section.course.credits;
+        return self.section.course.credits
 
 # Essentially a history element
 class StudentTrackEnrollment(models.Model):
@@ -224,9 +227,9 @@ class Track(models.Model):
 
 class TrackRequirements(models.Model):
     # id autogen
-    per_sem = models.IntegerField()
+    per_sem = models.FloatField()
     # overall = models.CharField(max_length=3, default=None)FIXME: What does this mean?
     description = models.TextField(max_length=255, default=None, null=True)
 
-    def per_year(self):
+    def per_year(self): # pragma: no cover
         return self.per_sem * 2
