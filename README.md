@@ -10,10 +10,14 @@ Activate virtual env.
 
 Create db migrations then create db off that schema.
 >python manage.py makemigrations\
-python manage.py migrate
+>python manage.py migrate
 
-Test. Creates test db from migration and deletes said db after testing. Additional argument will show code coverage. Testing is limited to NOSE_ARGS in eh_site/settings.py
->python manage.py test (--with-coverage)
+Test. Creates test db from migration and deletes said db after testing.
+>python manage.py test
+
+To generate coverage for eh_app, run tests with coverage and view generated report. -m shows line number for statements missing tests.
+>coverage run --source='./eh_app' manage.py test\
+>coverage report -m
 
 Load the seed data.
 >python manage.py loaddata seed

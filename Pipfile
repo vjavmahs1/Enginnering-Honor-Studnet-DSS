@@ -9,7 +9,6 @@ pylint = "*"
 [packages]
 django = "*"
 pyyaml = "*"
-django-nose = "*"
 coverage = "*"
 
 [requires]
