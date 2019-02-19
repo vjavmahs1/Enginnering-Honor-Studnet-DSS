@@ -30,6 +30,9 @@ class Campus(models.Model):
     # id autogen
     name = models.CharField(max_length=45, default=None, null=True, unique=True)
 
+class College(models.Model):
+    name = models.CharField(max_length=2, primary_key=True)
+
 class Course(models.Model):
     class Meta:
         unique_together = (('number', 'title', 'department'),)
@@ -41,6 +44,16 @@ class Course(models.Model):
     min_credits = models.PositiveIntegerField(default=None, null=True)
     max_credits = models.PositiveIntegerField(default=None, null=True)
     # NOTE: Do we need min and max credits?
+
+    # Relations
+    department = models.ForeignKey('Department', on_delete=None)
+
+class Degree(models.Model):
+    class Meta:
+        unique_together = (('department', 'concentration'),)
+
+    name = models.CharField(max_length=4, primary_key=True)
+    concentration = models.CharField(max_length=16, default=None, null=True)
 
     # Relations
     department = models.ForeignKey('Department', on_delete=None)
@@ -60,6 +73,7 @@ class Department(models.Model):
         related_name='required_activities',
         default=None,
     )
+    college = models.ForeignKey('College', on_delete=None)
 
     def activities_per_year(self): # pragma: no cover
         return self.activities_per_semester * 2
@@ -124,17 +138,22 @@ class Semester(models.Model):
 
 class Student(models.Model):
     uin = models.PositiveIntegerField(primary_key=True)
+
     first_name = models.CharField(max_length=45, default=None, null=True)
     last_name = models.CharField(max_length=45, default=None, null=True)
     middle_name = models.CharField(max_length=45, default=None, null=True)
     email = models.EmailField(max_length=45, default=None, null=True)
+
     gpa = models.FloatField(default=None, null=True)
     times_on_probation = models.PositiveIntegerField(default=0)
     times_dismissed = models.PositiveIntegerField(default=0)
-    major = models.CharField(max_length=45, default=None, null=True)
+
+    degree_candidate = models.BooleanField(default=False)
+    graduated = models.BooleanField(default=False)
 
     # Relations
-    department = models.ForeignKey('Department', default=None, null=True, on_delete=None)
+    majors = models.ManyToManyField('Degree', related_name='majors', default=None)
+    minors = models.ManyToManyField('Degree', related_name='minors', default=None)
     start_semester = models.ForeignKey('Semester', default=None, null=True, on_delete=None)
     graduation_semester = models.ForeignKey(
         'Semester',
@@ -144,8 +163,6 @@ class Student(models.Model):
         on_delete=None,
     )
     activities_attended = models.ManyToManyField('Activity', default=None)
-
-    graduated = models.BooleanField(default=False) # FIXME: Make function based on graduationsemester
 
 # Essentially a history element
 class StudentAdvisorMeeting(models.Model):
