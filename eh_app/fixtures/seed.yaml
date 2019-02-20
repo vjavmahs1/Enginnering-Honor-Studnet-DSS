@@ -1,4 +1,4 @@
-# TODO: finish creating seed data 
+# TODO: finish creating seed data
 
 - model: eh_app.Activity
   pk: 1 # This is the primary key. Either id or the element signified as pk in the models file
@@ -14,7 +14,7 @@
   fields:
     uin: 125003892
     first_name: Rachel
-    last_name: Johnson 
+    last_name: Johnson
     track: EH-CSCE # Relates to primary key of the Track
 - model: eh_app.Advisor
   pk: 2
@@ -26,7 +26,7 @@
 
 - model: eh_app.Campus
   pk: 1
-  fields: 
+  fields:
     name: College Station
 
 - model: eh_app.College
@@ -36,7 +36,7 @@
 
 - model: eh_app.Course
   pk: 1
-  fields: 
+  fields:
     number: 431
     title: Software Engineering
     credits: 3
@@ -87,7 +87,7 @@
   pk:
   fields:
     program:
-    details: 
+    details:
     requirement_satisfied: 1
     advisor: 1
     department: 1
@@ -96,8 +96,8 @@
   pk: 1
   fields:
     crn:
-    number: 
-    level: 
+    number:
+    level:
     course:
     teacher:
     semester:
@@ -113,11 +113,13 @@
   fields:
     semester: Fall
     academic_year: 2018-2019
+    successor: 1
 - model: eh_app.Semester
   pk: 3
   fields:
     semester: Fall
     academic_year: 2001-2002
+    successor: 2
 
 - model: eh_app.Student
   pk: 1
@@ -129,9 +131,9 @@
     gpa: 3.76
     # Relations
     majors: 1
-    minors: 
+    minors:
     start_semester: 2
-    graduation_semester: 1 
+    graduation_semester: 1
     activities_attended: 1
 - model: eh_app.Student
   pk: 2
@@ -143,9 +145,9 @@
     gpa: 3.90
     # Relations
     majors: 2
-    minors: 
+    minors:
     start_semester: 2
-    graduation_semester: 1 
+    graduation_semester: 1
     activities_attended: 1
 
 - model: eh_app.StudentAdvisorMeeting

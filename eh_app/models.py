@@ -3,8 +3,6 @@
 
 # FIXME: how do requirements relate through activities attended?
 
-# NOTE: Student status => Business logic (Should not be in db)
-
 from django.db import models
 
 class Activity(models.Model):
@@ -136,6 +134,18 @@ class Semester(models.Model):
     semester = models.CharField(max_length=16, default=None, null=True)
     academic_year = models.CharField(max_length=9, default=None, null=True)
 
+    # Relations
+    successor = models.OneToOneField(
+        'self',
+        related_name='predecessor',
+        default=None,
+        null=True,
+        on_delete=None
+    )
+
+    def current_semester(self):
+        return self.successor == None
+
 class Student(models.Model):
     uin = models.PositiveIntegerField(primary_key=True)
 
@@ -163,6 +173,14 @@ class Student(models.Model):
         on_delete=None,
     )
     activities_attended = models.ManyToManyField('Activity', default=None)
+
+    graduated = models.BooleanField(default=False) # FIXME: Make function based on graduationsemester
+
+    def status_f_gpa(self):
+        pass
+
+    def first_year_grace(self):
+        pass
 
 # Essentially a history element
 class StudentAdvisorMeeting(models.Model):
