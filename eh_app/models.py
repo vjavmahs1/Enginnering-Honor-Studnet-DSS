@@ -90,7 +90,7 @@ class Exception(models.Model):
         primary_key=True,
     )
 
-# TODO: Ask Pauline
+# TODO: Code as reqID, partial classes for inheriting object
 class Requirement(models.Model):
     # id autogen
     code = models.CharField(max_length=15)
@@ -211,12 +211,7 @@ class StudentResearch(models.Model):
         null=True,
         on_delete=None,
     )
-    requirement = models.ForeignKey(
-        'Requirement',
-        default=None,
-        null=True,
-        on_delete=None,
-    )
+    # requirement can be reached through research.requirement
 
 # Essentially a history element
 class StudentSectionEnrollment(models.Model):
