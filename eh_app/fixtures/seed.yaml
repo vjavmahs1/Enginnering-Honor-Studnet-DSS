@@ -1,4 +1,4 @@
-# TODO: finish creating seed data
+# # TODO: finish creating seed data
 
 - model: eh_app.Activity
   pk: 1 # This is the primary key. Either id or the element signified as pk in the models file
@@ -10,14 +10,14 @@
     requirement_satisfied: 1
 
 - model: eh_app.Advisor
-  pk: 1
+  pk:
   fields:
     uin: 125003892
     first_name: Rachel
     last_name: Johnson
     track: EH-CSCE # Relates to primary key of the Track
 - model: eh_app.Advisor
-  pk: 2
+  pk:
   fields:
     uin: 342001234
     first_name: Joseph
@@ -25,12 +25,12 @@
     track: EH-CSCE # Relates to primary key of the Track
 
 - model: eh_app.Campus
-  pk: 1
+  pk:
   fields:
-    name: College Station
+    name: college station
 
 - model: eh_app.College
-  pk: 1
+  pk:
   fields:
     name: EN
 
@@ -42,40 +42,40 @@
     credits: 3
     min_credits:
     max_credits:
+    #Relation
+    department: CSCE
 
 - model: eh_app.Degree
-  pk: 1
+  pk:
   fields:
     name: CPSC
     concentration:
     #Relation
-    department: 1
+    department: CSCE
 - model: eh_app.Degree
-  pk: 2
+  pk:
   fields:
     name: CEEN
     #Relation
-    department: 1
+    department: CSCE
 
 - model: eh_app.Department
-  pk: 1
+  pk:
   fields:
     name: CSCE
     activities_per_semester: 2
     advising_per_semester: 1
     # Relations
-    activities: 1
-    advisors: 2
+    activities: [1]
+    advisors: [125003892]
     track: EH-CSCE
-    required_activities:
+    college: EN
 
 - model: eh_app.Exception
   pk: 1
   fields:
-    type_of_leave:
-    leave_duration:
     semester: 2
-    student: 1
+    student: 218009384
 
 - model: eh_app.Requirement
   pk: 1
@@ -83,25 +83,25 @@
     code: AB
     description: Must attend one seminar by a visiting lecturer.
 
-- model: eh_app.Research
-  pk:
-  fields:
-    program:
-    details:
-    requirement_satisfied: 1
-    advisor: 1
-    department: 1
+# - model: eh_app.Research
+#   pk: 1
+#   fields:
+#     program:
+#     details:
+#     requirement_satisfied: 1
+#     advisor: 1
+#     department: 1
 
-- model: eh_app.Section
-  pk: 1
-  fields:
-    crn:
-    number:
-    level:
-    course:
-    teacher:
-    semester:
-    campus:
+# - model: eh_app.Section
+#   pk: 1
+#   fields:
+#     crn:
+#     number:
+#     level:
+#     course:
+#     teacher:
+#     semester:
+#     campus:
 
 - model: eh_app.Semester
   pk: 1
@@ -122,7 +122,7 @@
     successor: 2
 
 - model: eh_app.Student
-  pk: 1
+  pk:
   fields:
     uin: 218009384
     first_name: Henry
@@ -130,13 +130,12 @@
     email: henrydeng@tamu.edu
     gpa: 3.76
     # Relations
-    majors: 1
-    minors:
+    majors: [CPSC]
     start_semester: 2
     graduation_semester: 1
-    activities_attended: 1
+    activities_attended: [1]
 - model: eh_app.Student
-  pk: 2
+  pk:
   fields:
     uin: 358003821
     first_name: Lydia
@@ -144,54 +143,53 @@
     email: lylee@tamu.edu
     gpa: 3.90
     # Relations
-    majors: 2
-    minors:
+    majors: [CEEN]
     start_semester: 2
     graduation_semester: 1
-    activities_attended: 1
+    activities_attended: [1]
 
-- model: eh_app.StudentAdvisorMeeting
-  pk: 1
-  fields:
-    date: 2019-2-1
-    details: Meeting with the advisor of their department
-    student: 1
-    advisor: 1
-    requirement_satisfied: 1
-    semester: 1
+# - model: eh_app.StudentAdvisorMeeting
+#   pk: 1
+#   fields:
+#     date: 2019-2-1
+#     details: Meeting with the advisor of their department
+#     student: 218009384
+#     advisor: 1
+#     requirement_satisfied: 1
+#     semester: 1
 
-- model: eh_app.StudentResearch
-  pk: 1
-  fields:
-    course_credit:
-    paper_published:
-    conference_attended:
-    presentation:
-    details:
-    student:
-    research:
-    semester:
-    requirement:
+# - model: eh_app.StudentResearch
+#   pk: 1
+#   fields:
+#     course_credit:
+#     paper_published:
+#     conference_attended:
+#     presentation:
+#     details:
+#     student: 218009384
+#     research:
+#     semester:
+#     requirement:
 
-- model: eh_app.StudentSectionEnrollment
-  pk: 1
-  fields:
-    grade:
-    grading_mode:
-    repeat:
-    section:
-    student:
+# - model: eh_app.StudentSectionEnrollment
+#   pk: 1
+#   fields:
+#     grade:
+#     grading_mode:
+#     repeat:
+#     section:
+#     student: 218009384
 
-- model: eh_app.StudentTrackEnrollment
-  pk: 1
-  fields:
-    student:
-    track:
-    semester:
-    campus:
+# - model: eh_app.StudentTrackEnrollment
+#   pk: 1
+#   fields:
+#     student: 218009384
+#     track:
+#     semester:
+#     campus:
 
 - model: eh_app.Teacher
-  pk: 1
+  pk:
   fields:
     uin: 123004567
     first_name: William
