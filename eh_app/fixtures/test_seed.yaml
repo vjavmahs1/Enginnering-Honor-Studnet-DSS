@@ -184,7 +184,7 @@
   pk: EH-CSCE
   fields:
     name: CSCE Engineering Honors
-    semester_started: 3
+    semester_started: 200131
     requirements: 1 # Relates to TrackRequirements
 
 - model: eh_app.TrackRequirements

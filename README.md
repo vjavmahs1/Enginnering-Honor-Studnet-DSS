@@ -22,8 +22,8 @@ To generate coverage for eh_app, run tests with coverage and view generated repo
 >coverage run --source='./eh_app' manage.py test\
 >coverage report -m
 
-Load the seed data.
->python manage.py loaddata seed
+Load the test seed data.
+>python manage.py loaddata test_seed
 
 Get out of virtual env.
 >exit
