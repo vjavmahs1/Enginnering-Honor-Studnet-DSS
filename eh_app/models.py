@@ -2,7 +2,7 @@
 # TODO: Verify cascade settings
 # TODO: All relation fields cannot be null
 
-# FIXME: how do requirements relate through activities attended?
+# FIXME: refactor of all activity based items
 
 from django.db import models
 from .querysets import SemesterQueryset
@@ -26,7 +26,6 @@ class Advisor(models.Model):
     # Relations
     track = models.ForeignKey('Track', default=None, null=True, on_delete=None)
 
-# FIXME: Remove
 class Campus(models.Model):
     name = models.CharField(primary_key=True, max_length=45)
 
@@ -130,7 +129,7 @@ class Section(models.Model):
     campus = models.ForeignKey('Campus', default=None, null=True, on_delete=None)
 
 class Semester(models.Model):
-    id = models.PositiveIntegerField(primary_key=True)  # TODO: Need seed data with new pk
+    id = models.PositiveIntegerField(primary_key=True)
     semester = models.CharField(max_length=16, default=None, null=True)
     academic_year = models.CharField(max_length=9, default=None, null=True)
 
@@ -151,6 +150,8 @@ class Semester(models.Model):
     def past_semester(self):
         return self.successor != None
 
+    # TODO: Creating a new current semester should trigger calculation of status elements for the newly elapsed semester
+
 class Student(models.Model):
     uin = models.PositiveIntegerField(primary_key=True)
 
@@ -159,7 +160,6 @@ class Student(models.Model):
     middle_name = models.CharField(max_length=45, default=None, null=True)
     email = models.EmailField(max_length=45, default=None, null=True)
 
-    gpa = models.FloatField(default=None, null=True)
     times_on_probation = models.PositiveIntegerField(default=0)
     times_dismissed = models.PositiveIntegerField(default=0)
 
@@ -179,11 +179,16 @@ class Student(models.Model):
     )
     activities_attended = models.ManyToManyField('Activity', default=None)
 
-    def status_f_gpa(self):
-        pass
-
     def first_year_grace(self):
         pass
+
+    def status_gpa_alone(self):
+        pass # TODO: Look at most recent status
+
+    # Taken from all previous semesters
+    # From student semester status set.last
+    def cumulative_gpa(self):
+        pass # TODO: Look at most recent status
 
 # Essentially a history element
 class StudentAdvisorMeeting(models.Model):
@@ -233,6 +238,48 @@ class StudentSectionEnrollment(models.Model):
 
     def credits(self):
         return self.section.course.credits
+
+# TODO: StudentSemesterStatus.objects.get_uin_status()
+# Generated for each student on the turn of a semester
+# History element to track eh status by semester
+# All null fields and overalls will be finalized when the semester is changed
+class StudentSemesterStatus(models.Model):
+    class Meta:
+        unique_together = (('semester', 'successor'),)
+
+    # id autogen
+    # Performance of this semester alone
+    hours_attempted = models.PositiveIntegerField()
+    hours_earned = models.PositiveIntegerField(default=None, null=True)
+    hours_passed = models.PositiveIntegerField(default=None, null=True)
+    quality_points = models.PositiveIntegerField(default=None, null=True)
+    semester_gpa = models.FloatField(default=None, null=True)
+
+    # Based off of previous semester fields, includes fields above
+    # Initially just a pull from the previous semester status
+    overall_hours_attempted = models.PositiveIntegerField()
+    overall_hours_earned = models.PositiveIntegerField()
+    overall_hours_passed = models.PositiveIntegerField()
+    overall_quality_points = models.PositiveIntegerField()
+    overall_semester_gpa = models.FloatField()
+
+    status = models.CharField(max_length=20)
+
+    # Relations
+    student = models.ForeignKey(
+        'Student',
+        on_delete=None,
+    )
+    semester = models.ForeignKey('Semester', on_delete=None)
+    successor = models.OneToOneField(
+        'self',
+        related_name='predecessor',
+        default=None,
+        null=True,
+        on_delete=None
+    )
+
+    # TODO: Functions to calculate these things on creation. Maybe queryset logic
 
 # Essentially a history element
 class StudentTrackEnrollment(models.Model):

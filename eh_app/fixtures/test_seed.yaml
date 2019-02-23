@@ -120,7 +120,6 @@
     first_name: Henry
     last_name: Deng
     email: henrydeng@tamu.edu
-    gpa: 3.76
     # Relations
     majors: [CPSC]
     start_semester: 201831
@@ -132,7 +131,6 @@
     first_name: Lydia
     last_name: Lee
     email: lylee@tamu.edu
-    gpa: 3.90
     # Relations
     majors: [CEEN]
     start_semester: 201831
