@@ -1,5 +1,5 @@
 from django.test import TestCase
-from eh_app.models import Course, Department, Section, Semester, Student, StudentSectionEnrollment, TrackRequirements
+from eh_app.models import Semester, StudentSectionEnrollment, StudentSemesterStatus
 
 class SemesterTestCase(TestCase):
     fixtures = ['test_seed']
@@ -37,3 +37,18 @@ class StudentSectionEnrollmentTestCase(TestCase):
     def test_credits(self):
         student_enrollment = StudentSectionEnrollment.objects.get(id=1)
         self.assertEqual(student_enrollment.credits(), 3)
+
+class StudentSemesterStatusTestCase(TestCase):
+    fixtures = ['test_seed']
+
+    def test_post_init(self):
+        status = StudentSemesterStatus.objects.get(id=1)
+        self.assertEqual(status.overall_hours_attempted, 0)
+        self.assertEqual(status.status, 'Good Standing')
+        self.assertEqual(status.previous_status, 'Good Standing')
+
+        status = StudentSemesterStatus.objects.get(id=2)
+        self.assertEqual(status.hours_attempted, 3)
+        self.assertEqual(status.previous_status, 'Good Standing')
+        self.assertEqual(status.overall_hours_attempted, 3)
+        self.assertEqual(status.overall_quality_points, 12)

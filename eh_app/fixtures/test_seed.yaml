@@ -165,6 +165,25 @@
     section: 15029
     student: 218009384
 
+- model: eh_app.StudentSemesterStatus
+  pk: 1
+  fields:
+    hours_attempted: 3
+    hours_earned: 3
+    hours_passed: 3
+    quality_points: 12
+    semester_gpa: 4.0
+    status: Good Standing
+    student: 218009384
+    semester: 201831
+- model: eh_app.StudentSemesterStatus
+  pk: 2
+  fields:
+    hours_attempted: 3
+    student: 218009384
+    semester: 201911
+    predecessor: 1
+
 - model: eh_app.StudentTrackEnrollment
   pk: 1
   fields:

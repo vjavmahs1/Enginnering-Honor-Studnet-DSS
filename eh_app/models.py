@@ -253,25 +253,26 @@ class StudentSectionEnrollment(_BaseTimestampModel):
 # All null fields and overalls will be finalized when the semester is changed
 class StudentSemesterStatus(_BaseTimestampModel):
     class Meta:
-        unique_together = (('semester', 'successor'),)
+        unique_together = (('semester', 'predecessor'),)
 
     # id autogen
     # Performance of this semester alone
     hours_attempted = models.PositiveIntegerField()
-    hours_earned = models.PositiveIntegerField(default=None, null=True)
-    hours_passed = models.PositiveIntegerField(default=None, null=True)
-    quality_points = models.PositiveIntegerField(default=None, null=True)
-    semester_gpa = models.FloatField(default=None, null=True)
+    hours_earned = models.PositiveIntegerField(default=0)
+    hours_passed = models.PositiveIntegerField(default=0)
+    quality_points = models.PositiveIntegerField(default=0)
+    semester_gpa = models.FloatField(default=0)
 
-    # Based off of previous semester fields, includes fields above
+    # Based off of previous semesters, doesn't include fields above
     # Initially just a pull from the previous semester status
-    overall_hours_attempted = models.PositiveIntegerField()
-    overall_hours_earned = models.PositiveIntegerField()
-    overall_hours_passed = models.PositiveIntegerField()
-    overall_quality_points = models.PositiveIntegerField()
-    overall_semester_gpa = models.FloatField()
+    overall_hours_attempted = models.PositiveIntegerField(default=0)
+    overall_hours_earned = models.PositiveIntegerField(default=0)
+    overall_hours_passed = models.PositiveIntegerField(default=0)
+    overall_quality_points = models.PositiveIntegerField(default=0)
+    overall_gpa = models.FloatField(default=0)
 
-    status = models.CharField(max_length=20)
+    status = models.CharField(max_length=20, default='n/a') # Requires filling in at end of semester
+    previous_status = models.CharField(max_length=20, default='Good Standing')
 
     # Relations
     student = models.ForeignKey(
@@ -279,15 +280,13 @@ class StudentSemesterStatus(_BaseTimestampModel):
         on_delete=None,
     )
     semester = models.ForeignKey('Semester', on_delete=None)
-    successor = models.OneToOneField(
+    predecessor = models.OneToOneField(
         'self',
-        related_name='predecessor',
+        related_name='successor',
         default=None,
         null=True,
         on_delete=None
     )
-
-    # TODO: Functions to calculate these things on creation. Maybe queryset logic
 
 # Essentially a history element
 class StudentTrackEnrollment(_BaseTimestampModel):
