@@ -11,6 +11,17 @@ class SemesterTestCase(TestCase):
         self.assertEqual(sem.current_semester(), True)
         self.assertEqual(sem.past_semester(), False)
 
+    def test_new_current_semester(self):
+        # Where a semester is created newly
+        Semester.objects.new_current_semester(id=201921)
+        self.assertEqual(Semester.objects.get_current_semester().id, 201921)
+        self.assertEqual(Semester.objects.get_current_semester().predecessor.id, 201911)
+
+        # Existing semester is found
+        Semester.objects.new_current_semester(id=202211)
+        self.assertEqual(Semester.objects.get_current_semester().id, 202211)
+        self.assertEqual(Semester.objects.get_current_semester().predecessor.id, 201921)
+
     def test_past_semester(self):
         sem = Semester.objects.get(id=201831)
         self.assertEqual(sem.past_semester(), True)

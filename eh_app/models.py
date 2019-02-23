@@ -139,6 +139,7 @@ class Semester(_BaseTimestampModel):
     id = models.PositiveIntegerField(primary_key=True)
     semester = models.CharField(max_length=16, default=None, null=True)
     academic_year = models.CharField(max_length=9, default=None, null=True)
+    current = models.BooleanField(default=False)
 
     # Relations
     successor = models.OneToOneField(

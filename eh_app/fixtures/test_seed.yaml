@@ -99,6 +99,7 @@
 - model: eh_app.Semester
   fields:
     id: 201911
+    current: True
     semester: Spring
     academic_year: 2018-2019
 - model: eh_app.Semester
