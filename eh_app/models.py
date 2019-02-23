@@ -203,7 +203,18 @@ class Student(_BaseTimestampModel):
     activities_attended = models.ManyToManyField('Activity', default=None)
 
     def first_year_grace(self):
-        pass
+        current_sem = Semester.objects.get_current()
+
+        temp = self.start_semester
+        for i in range(3):
+            if temp.id == current_sem.id:
+                return True
+            elif temp.successor:
+                temp = temp.successor
+            else:
+                raise IndexError('Student has not started or semester chain has not been preserved')
+
+        return False
 
     def status_gpa_alone(self):
         pass # TODO: Look at most recent status

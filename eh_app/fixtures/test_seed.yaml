@@ -110,10 +110,22 @@
     successor: 201911
 - model: eh_app.Semester
   fields:
+    id: 201811
+    semester: Spring
+    academic_year: 2017-2018
+    successor: 201831
+- model: eh_app.Semester
+  fields:
+    id: 201731
+    semester: Fall
+    academic_year: 2017-2018
+    successor: 201811
+- model: eh_app.Semester
+  fields:
     id: 200131
     semester: Fall
     academic_year: 2001-2002
-    successor: 201831
+    successor: 201731
 
 - model: eh_app.Student
   fields:
@@ -137,6 +149,39 @@
     start_semester: 201831
     graduation_semester: 202211
     activities_attended: [1]
+- model: eh_app.Student
+  fields:
+    uin: 329003124
+    first_name: John
+    last_name: Lee
+    email: John@tamu.edu
+    # Relations
+    majors: [CPSC]
+    start_semester: 201811
+    graduation_semester: 202211
+    activities_attended: [1]
+- model: eh_app.Student
+  fields:
+    uin: 987001241
+    first_name: Wes
+    last_name: Hampton
+    email: wham@tamu.edu
+    # Relations
+    majors: [CEEN]
+    start_semester: 201731
+    graduation_semester: 202211
+    activities_attended: []
+- model: eh_app.Student
+  fields:
+    uin: 402009991
+    first_name: Future
+    last_name: Student
+    email: Future@tamu.edu
+    # Relations
+    majors: [CEEN]
+    start_semester: 202211
+    graduation_semester: 202211
+    activities_attended: []
 
 - model: eh_app.StudentAdvisorMeeting
   pk: 1
