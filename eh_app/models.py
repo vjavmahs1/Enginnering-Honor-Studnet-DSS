@@ -222,9 +222,25 @@ class Student(_BaseTimestampModel):
             elif temp.successor:
                 temp = temp.successor
             else:
-                # raise IndexError('Student has not started or semester chain has not been preserved')
                 return 'Invalid record'
+
         return False
+
+    def major_names(self):
+        major_names = []
+        majors = self.majors.all()
+        for major in majors:
+            major_names.append(major.name)
+
+        return major_names
+
+    def minor_names(self):
+        minor_names = []
+        minors = self.minors.all()
+        for minor in minors:
+            minor_names.append(minor.name)
+
+        return minor_names
 
     def status_gpa_alone(self):
         last_status = self.semester_statuses_set.last()
