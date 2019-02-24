@@ -1,5 +1,5 @@
 from django.test import TestCase
-from eh_app.models import GPAStatus, Semester, StudentSectionEnrollment, StudentSemesterStatus
+from eh_app.models import GPAStatus, Semester, Student, StudentSectionEnrollment, StudentSemesterStatus
 
 class GPAStatusTestCase(TestCase):
     fixtures = ['GPADeficiency']
@@ -32,8 +32,8 @@ class SemesterTestCase(TestCase):
         sem = Semester.objects.get_current()
         self.assertEqual(sem.semester, 'Spring')
         self.assertEqual(sem.academic_year, '2018-2019')
-        self.assertEqual(sem.current_semester(), True)
-        self.assertEqual(sem.past_semester(), False)
+        self.assertTrue(sem.current_semester())
+        self.assertFalse(sem.past_semester())
 
     def test_new_current(self):
         # Where a semester is created newly
@@ -48,8 +48,32 @@ class SemesterTestCase(TestCase):
 
     def test_past_semester(self):
         sem = Semester.objects.get(id=201831)
-        self.assertEqual(sem.past_semester(), True)
-        self.assertEqual(sem.current_semester(), False)
+        self.assertTrue(sem.past_semester())
+        self.assertFalse(sem.current_semester())
+
+class StudentTestCase(TestCase):
+    fixtures = ['test_seed', 'GPADeficiency']
+
+    def test_cumulative_gpa(self):
+        student = Student.objects.get(uin=218009384)
+        self.assertEqual(student.cumulative_gpa(), 4.0)
+
+    def test_first_year_grace(self):
+        student = Student.objects.get(uin=358003821)
+        self.assertTrue(student.first_year_grace())
+
+        student = Student.objects.get(uin=329003124)
+        self.assertTrue(student.first_year_grace())
+
+        student = Student.objects.get(uin=987001241)
+        self.assertFalse(student.first_year_grace())
+
+        student = Student.objects.get(uin=402009991)
+        self.assertRaises(IndexError, student.first_year_grace)
+
+    def test_status_gpa_alone(self):
+        student = Student.objects.get(uin=218009384)
+        self.assertEqual(student.status_gpa_alone(), 'Stay on Grace Period-GPA Ok')
 
 class StudentSectionEnrollmentTestCase(TestCase):
     fixtures = ['test_seed']
