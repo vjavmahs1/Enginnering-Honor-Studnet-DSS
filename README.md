@@ -22,7 +22,7 @@ To generate coverage for eh_app, run tests with coverage and view generated repo
 >coverage run --source='./eh_app' manage.py test\
 >coverage report -m
 
-Load the test seed data.
+Load the test seed data. Loading of other data (other .yaml files in the fixtures folder) will populate the db with config data.
 >python manage.py loaddata test_seed
 
 Get out of virtual env.
