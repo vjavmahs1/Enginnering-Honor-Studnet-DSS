@@ -67,17 +67,18 @@ html{
   color: inherit;
 }
 
-table.studentlist {
+.studentlist {
   border-collapse: collapse;
   table-layout: auto;
-  width: 100%;
   background-color: #1a1221;
   border: 1px solid white;
-  padding: 10px;
   color: white;
+  margin: 0 auto;
+  width: 100%;
 }
 .studentlist th, 
 .studentlist td {
   border: 1px solid gray;
   text-align: center;
+  padding: 5px;
 }
