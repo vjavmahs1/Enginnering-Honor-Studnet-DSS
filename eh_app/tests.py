@@ -58,6 +58,9 @@ class StudentTestCase(TestCase):
         student = Student.objects.get(uin=218009384)
         self.assertEqual(student.cumulative_gpa(), 4.0)
 
+        student = Student.objects.get(uin=402009991)
+        self.assertEqual(student.cumulative_gpa(), 'n/a')
+
     def test_first_year_grace(self):
         student = Student.objects.get(uin=358003821)
         self.assertTrue(student.first_year_grace())
