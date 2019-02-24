@@ -26,3 +26,7 @@ def index(request):
 
     students = Student.objects.filter()
     return render(request, 'eh_app/index.html', {'students': students})
+
+def studentList(request):
+    students = Student.objects.filter()
+    return render(request, 'eh_app/student_list.html', {'students': students})

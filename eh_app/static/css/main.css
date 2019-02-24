@@ -41,4 +41,17 @@
     background-color: #1a1221;
     border: 1px solid gray;
     padding: 10px;
+    color: white;
+}
+
+.student-list-content{
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.student-list-content a{
+  text-decoration: none;
+  color: inherit;
 }
