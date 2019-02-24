@@ -207,6 +207,9 @@ class Student(_BaseTimestampModel):
     # From student semester status set.last
     def cumulative_gpa(self):
         previous_status = self.semester_statuses_set.last()
+        if not previous_status:
+            return 'n/a'
+
         return float(previous_status.overall_gpa)
 
     def first_year_grace(self):
@@ -219,12 +222,15 @@ class Student(_BaseTimestampModel):
             elif temp.successor:
                 temp = temp.successor
             else:
-                raise IndexError('Student has not started or semester chain has not been preserved')
-
+                # raise IndexError('Student has not started or semester chain has not been preserved')
+                return 'Invalid record'
         return False
 
     def status_gpa_alone(self):
         last_status = self.semester_statuses_set.last()
+
+        if not last_status:
+            return 'n/a'
 
         deficiency_value_prefix = 'Y-' if self.first_year_grace() else 'N-'
 
