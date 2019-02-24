@@ -1,0 +1,44 @@
+.page-header {
+    background-color: #500000;
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+
+.top-left{
+    float: right;
+    color: white;
+}
+
+.top-left a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.index-content{
+  font-family: arial;
+}
+
+.grid-list-header{
+    display: grid;
+    grid-template-columns: 10% 15% 30%;
+    color: white;
+    margin-left: 8%;
+}
+
+.grid-list-header div{
+    background-color: black;
+    border: 1px solid gray;
+    padding: 10px;
+}
+
+.grid-list{
+    display: grid;
+    grid-template-columns: 10% 15% 30%;
+    margin-left: 8%;
+}
+
+.grid-list div{
+    background-color: #1a1221;
+    border: 1px solid gray;
+    padding: 10px;
+}
