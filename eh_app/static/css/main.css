@@ -24,7 +24,7 @@ html{
 
 .grid-list-header{
     display: grid;
-    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 8% 10% 14% 10% 10%;
+    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 8% 10% 14% 10% 10% 15% 15% 15%;
     color: white;
     margin-left: 8%;
     font-size: 12px;
@@ -38,7 +38,7 @@ html{
 
 .grid-list{
     display: grid;
-    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 8% 10% 14% 10% 10%;
+    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 8% 10% 14% 10% 10% 15% 15% 15%;
     margin-left: 8%;
 }
 
