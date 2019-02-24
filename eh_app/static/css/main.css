@@ -67,7 +67,7 @@ html{
   color: inherit;
 }
 
-table {
+table.studentlist {
   border-collapse: collapse;
   table-layout: auto;
   width: 100%;
@@ -76,7 +76,8 @@ table {
   padding: 10px;
   color: white;
 }
-th, td {
+.studentlist th, 
+.studentlist td {
   border: 1px solid gray;
   text-align: center;
 }
