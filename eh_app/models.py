@@ -294,6 +294,7 @@ class StudentResearch(_BaseTimestampModel):
 # Essentially a history element
 class StudentSectionEnrollment(_BaseTimestampModel):
     # id autogen
+    # TODO: On finalize these fields need to have been set correctly
     grade = models.CharField(max_length=2, default=None, null=True)
     grading_mode = models.CharField(max_length=10, default=None, null=True) # s/u
     repeat = models.CharField(max_length=10, default=None, null=True)
@@ -301,6 +302,11 @@ class StudentSectionEnrollment(_BaseTimestampModel):
     # Relations
     section = models.ForeignKey('Section', on_delete=None)
     student = models.ForeignKey('Student', on_delete=None)
+    relevant_status = models.ForeignKey(
+        'StudentSemesterStatus',
+        related_name='section_enrollments_set',
+        on_delete=None,
+    )
 
     def semester(self):
         return self.section.semester

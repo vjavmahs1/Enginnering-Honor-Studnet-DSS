@@ -208,6 +208,7 @@
     grade: A
     repeat: No
     section: 15029
+    relevant_status: 1
     student: 218009384
 
 - model: eh_app.StudentSemesterStatus
