@@ -218,6 +218,7 @@
     hours_passed: 3
     quality_points: 12
     semester_gpa: 4.0
+    finalized: True
     status: Good Standing
     student: 218009384
     semester: 201831

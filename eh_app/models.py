@@ -74,7 +74,7 @@ class Department(_BaseTimestampModel):
     track = models.ForeignKey('Track', default=None, null=True, on_delete=None)
     required_activities = models.ManyToManyField(
         'Activity',
-        related_name='required_activities',
+        related_name='required_activities_set',
         default=None,
     )
     college = models.ForeignKey('College', on_delete=None)
@@ -187,20 +187,27 @@ class Student(_BaseTimestampModel):
     times_dismissed = models.PositiveIntegerField(default=0)
 
     degree_candidate = models.BooleanField(default=False)
+    # TODO: Should also be set true on turn of semester
     graduated = models.BooleanField(default=False)
 
     # Relations
-    majors = models.ManyToManyField('Degree', related_name='majors', default=None)
-    minors = models.ManyToManyField('Degree', related_name='minors', default=None)
+    majors = models.ManyToManyField('Degree', related_name='majors_set', default=None)
+    minors = models.ManyToManyField('Degree', related_name='minors_set', default=None)
     start_semester = models.ForeignKey('Semester', default=None, null=True, on_delete=None)
     graduation_semester = models.ForeignKey(
         'Semester',
-        related_name='graduation_semester',
+        related_name='graduating_set',
         default=None,
         null=True,
         on_delete=None,
     )
     activities_attended = models.ManyToManyField('Activity', default=None)
+
+    # Taken from all previous semesters
+    # From student semester status set.last
+    def cumulative_gpa(self):
+        previous_status = self.semester_statuses_set.last()
+        return float(previous_status.overall_gpa)
 
     def first_year_grace(self):
         current_sem = Semester.objects.get_current()
@@ -217,12 +224,18 @@ class Student(_BaseTimestampModel):
         return False
 
     def status_gpa_alone(self):
-        pass # TODO: Look at most recent status
+        last_status = self.semester_statuses_set.last()
 
-    # Taken from all previous semesters
-    # From student semester status set.last
-    def cumulative_gpa(self):
-        pass # TODO: Look at most recent status
+        deficiency_value_prefix = 'Y-' if self.first_year_grace() else 'N-'
+
+        deficiency = GPADeficiency.objects.get(
+            value=deficiency_value_prefix + last_status.previous_status
+        )
+
+        return GPAStatus.objects.get_status(
+            deficiency.code,
+            float(last_status.overall_gpa),
+        ).status
 
 # Essentially a history element
 class StudentAdvisorMeeting(_BaseTimestampModel):
@@ -273,8 +286,7 @@ class StudentSectionEnrollment(_BaseTimestampModel):
     def credits(self):
         return self.section.course.credits
 
-# TODO: StudentSemesterStatus.objects.get_uin_status()
-# Generated for each student on the turn of a semester
+# Finalized for each student on the turn of a semester
 # History element to track eh status by semester
 # All null fields and overalls will be finalized when the semester is changed
 class StudentSemesterStatus(_BaseTimestampModel):
@@ -282,7 +294,6 @@ class StudentSemesterStatus(_BaseTimestampModel):
         unique_together = (('semester', 'predecessor'),)
 
     # id autogen
-    finalized = models.BooleanField(default=False)
     # Performance of this semester alone
     hours_attempted = models.PositiveIntegerField()
     hours_earned = models.PositiveIntegerField(default=0)
@@ -290,8 +301,10 @@ class StudentSemesterStatus(_BaseTimestampModel):
     quality_points = models.PositiveIntegerField(default=0)
     semester_gpa = models.DecimalField(max_digits=3, decimal_places=2, default=0)
 
-    # Based off of previous semesters, doesn't include fields above
+    # Based off of previous semesters, doesn't include fields above unless finalized == true
+    # TODO: Signal on finalized to do computation
     # Initially just a pull from the previous semester status
+    finalized = models.BooleanField(default=False)
     overall_hours_attempted = models.PositiveIntegerField(default=0)
     overall_hours_earned = models.PositiveIntegerField(default=0)
     overall_hours_passed = models.PositiveIntegerField(default=0)
@@ -304,6 +317,7 @@ class StudentSemesterStatus(_BaseTimestampModel):
     # Relations
     student = models.ForeignKey(
         'Student',
+        related_name='semester_statuses_set',
         on_delete=None,
     )
     semester = models.ForeignKey('Semester', on_delete=None)

@@ -52,7 +52,11 @@ class SemesterTestCase(TestCase):
         self.assertFalse(sem.current_semester())
 
 class StudentTestCase(TestCase):
-    fixtures = ['test_seed']
+    fixtures = ['test_seed', 'GPADeficiency']
+
+    def test_cumulative_gpa(self):
+        student = Student.objects.get(uin=218009384)
+        self.assertEqual(student.cumulative_gpa(), 4.0)
 
     def test_first_year_grace(self):
         student = Student.objects.get(uin=358003821)
@@ -66,6 +70,10 @@ class StudentTestCase(TestCase):
 
         student = Student.objects.get(uin=402009991)
         self.assertRaises(IndexError, student.first_year_grace)
+
+    def test_status_gpa_alone(self):
+        student = Student.objects.get(uin=218009384)
+        self.assertEqual(student.status_gpa_alone(), 'Stay on Grace Period-GPA Ok')
 
 class StudentSectionEnrollmentTestCase(TestCase):
     fixtures = ['test_seed']
