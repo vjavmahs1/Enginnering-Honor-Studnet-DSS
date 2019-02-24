@@ -222,8 +222,8 @@ class Student(_BaseTimestampModel):
             elif temp.successor:
                 temp = temp.successor
             else:
-                raise IndexError('Student has not started or semester chain has not been preserved')
-
+                # raise IndexError('Student has not started or semester chain has not been preserved')
+                return 'Invalid record'
         return False
 
     def status_gpa_alone(self):

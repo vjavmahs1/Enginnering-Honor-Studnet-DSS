@@ -72,7 +72,7 @@ class StudentTestCase(TestCase):
         self.assertFalse(student.first_year_grace())
 
         student = Student.objects.get(uin=402009991)
-        self.assertRaises(IndexError, student.first_year_grace)
+        self.assertEqual(student.first_year_grace, 'Invalid record')
 
     def test_status_gpa_alone(self):
         student = Student.objects.get(uin=218009384)
