@@ -24,9 +24,10 @@ html{
 
 .grid-list-header{
     display: grid;
-    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 8% 10% 14%;
+    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 8% 10% 14% 10% 10%;
     color: white;
     margin-left: 8%;
+    font-size: 12px;
 }
 
 .grid-list-header div{
@@ -37,7 +38,7 @@ html{
 
 .grid-list{
     display: grid;
-    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 8% 10% 14%;
+    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 8% 10% 14% 10% 10%;
     margin-left: 8%;
 }
 

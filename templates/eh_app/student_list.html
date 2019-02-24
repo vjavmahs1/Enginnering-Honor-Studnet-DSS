@@ -14,13 +14,15 @@
     <div>GPA</div>
     <div>First Year Grace?</div>
     <div>Status Based on GPA Alone</div>
+    <div>Degree Candidate?</div>
+    <div>Graduated?</div>
   </div>
 
   <!-- ------- This is how it should look after linking db data -->
   {% for student in students %}
     <div class="grid-list">
-      <div> {{ student.last_name }} </div>
       <div> {{ student.first_name }} </div>
+      <div> {{ student.last_name }} </div>
       <div> {{ student.middle_name}} </div>
       <div> {{ student.uin }} </div>
       <div> {{ student.email }} </div>
@@ -29,6 +31,8 @@
       <div> {{ student.cumulative_gpa }} </div>
       <div> {{ student.first_year_grace }} </div>
       <div> {{ student.status_gpa_alone }} </div>
+      <div> {{ student.degree_candidate }} </div>
+      <div> {{ student.graduated }} </div>
     </div>
   {% endfor %}
 
