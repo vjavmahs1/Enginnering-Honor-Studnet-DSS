@@ -112,6 +112,7 @@ venv.bak/
 *.sql
 *.exe
 
+.idea/
 
 myvenv
 local_settings.py
