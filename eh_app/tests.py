@@ -72,7 +72,15 @@ class StudentTestCase(TestCase):
         self.assertFalse(student.first_year_grace())
 
         student = Student.objects.get(uin=402009991)
-        self.assertEqual(student.first_year_grace, 'Invalid record')
+        self.assertEqual(student.first_year_grace(), 'Invalid record')
+
+    def test_major_names(self):
+        student = Student.objects.get(uin=218009384)
+        self.assertEqual(student.major_names(), ['CPSC'])
+
+    def test_minor_names(self):
+        student = Student.objects.get(uin=218009384)
+        self.assertEqual(student.minor_names(), [])
 
     def test_status_gpa_alone(self):
         student = Student.objects.get(uin=218009384)
