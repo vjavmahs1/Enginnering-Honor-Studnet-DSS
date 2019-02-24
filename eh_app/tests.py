@@ -75,6 +75,12 @@ class StudentTestCase(TestCase):
         student = Student.objects.get(uin=218009384)
         self.assertEqual(student.status_gpa_alone(), 'Stay on Grace Period-GPA Ok')
 
+        student = Student.objects.get(uin=987001241)
+        self.assertEqual(student.status_gpa_alone(), 'n/a')
+
+        student = Student.objects.get(uin=402009991)
+        self.assertEqual(student.status_gpa_alone(), 'n/a')
+
 class StudentSectionEnrollmentTestCase(TestCase):
     fixtures = ['test_seed']
 

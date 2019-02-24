@@ -226,6 +226,9 @@ class Student(_BaseTimestampModel):
     def status_gpa_alone(self):
         last_status = self.semester_statuses_set.last()
 
+        if not last_status:
+            return 'n/a'
+
         deficiency_value_prefix = 'Y-' if self.first_year_grace() else 'N-'
 
         deficiency = GPADeficiency.objects.get(
