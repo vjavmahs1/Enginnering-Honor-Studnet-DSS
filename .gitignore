@@ -112,3 +112,7 @@ venv.bak/
 .DS_Store
 *.sql
 *.exe
+
+
+myvenv
+local_settings.py
