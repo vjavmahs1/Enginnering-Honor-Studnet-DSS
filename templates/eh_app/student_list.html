@@ -2,55 +2,51 @@
 
 {% block content %}
 <div class="index-content">
-
-  <div class="grid-list-header">
-    <div>First Name </div>
-    <div>Last Name </div>
-    <div>Middle Name</div>
-    <div>UIN</div>
-    <div>email</div>
-    <div>Times on Probation</div>
-    <div>Times Dismissed</div>
-    <div>GPA</div>
-    <div>First Year Grace?</div>
-    <div>Status Based on GPA Alone</div>
-    <div>Degree Candidate?</div>
-    <div>Graduated?</div>
-    <div>Major(s)</div>
-    <div>Minor(s)</div>
-    <div>Start Semester</div>
-  </div>
-
-  <!-- ------- This is how it should look after linking db data -->
-  {% for student in students %}
-    <div class="grid-list">
-      <div> {{ student.first_name }} </div>
-      <div> {{ student.last_name }} </div>
-      <div> {{ student.middle_name}} </div>
-      <div> {{ student.uin }} </div>
-      <div> {{ student.email }} </div>
-      <div> {{ student.times_on_probation}} </div>
-      <div> {{ student.times_dismissed}} </div>
-      <div> {{ student.cumulative_gpa }} </div>
-      <div> {{ student.first_year_grace }} </div>
-      <div> {{ student.status_gpa_alone }} </div>
-      <div> {{ student.degree_candidate }} </div>
-      <div> {{ student.graduated }} </div>
-      <div> {{ student.majors }} </div>
-      <div> {{ student.minors }} </div>
-      <div> {{ student.start_semester }} </div>
-    </div>
-  {% endfor %}
-
+  <table class="studentlist">
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Middle Name</th>
+      <th>UIN</th>
+      <th>email</th>
+      <th>Times on Probation</th>
+      <th>Times Dimissed</th>
+      <th>GPA</th>
+      <th>First Year Grace?</th>
+      <th>Status Based on GPA Alone</th>
+      <th>Degree Candidate?</th>
+      <th>Graduated?</th>
+      <th>Major(s)</th>
+      <th>Minior(s)</th>
+      <th>Start Semester</th>
+    </tr>
+     <!-- ------- This is how it should look after linking db data -->
+    {% for student in students %}
+    <tr>
+      <td> {{ student.first_name }} </td>
+      <td> {{ student.last_name }} </td>
+      <td> {{ student.middle_name}} </td>
+      <td> {{ student.uin }} </td>
+      <td> {{ student.email }} </td>
+      <td> {{ student.times_on_probation}} </td>
+      <td> {{ student.times_dismissed}} </td>
+      <td> {{ student.cumulative_gpa }} </td>
+      <td> {{ student.first_year_grace }} </td>
+      <td> {{ student.status_gpa_alone }} </td>
+      <td> {{ student.degree_candidate }} </td>
+      <td> {{ student.graduated }} </td>
+      <td> {{ student.majors }} </td>
+      <td> {{ student.minors }} </td>
+      <td> {{ student.start_semester }} </td>
+    </tr>
+    {% endfor %}
+  </table>
 
   <!-- <div class="grid-list">
     <div>Fake</div>
     <div>Data</div>
     <div>Not a UIN</div>
   </div> -->
-
-
-
 
 </div>
 {% endblock %}
