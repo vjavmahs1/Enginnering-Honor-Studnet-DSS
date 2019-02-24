@@ -6,7 +6,7 @@ Install needed packages and create virtual env.
 >pipenv install
 
 This will update your pipenv environment to the lock file contents. Run if you already have a pipenv established.
->pipenv update
+>pipenv sync
 
 Activate virtual env.
 >pipenv shell
