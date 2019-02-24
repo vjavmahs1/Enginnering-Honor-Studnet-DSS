@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'eh_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangogirls',
+        'NAME': 'eh-DDS',
         'USER': 'name',
         'PASSWORD': '',
         'HOST': 'localhost',
