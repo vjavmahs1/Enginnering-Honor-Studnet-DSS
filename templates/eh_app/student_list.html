@@ -9,17 +9,24 @@
     <div>UIN</div>
   </div>
 
+  <!--------- This is how it should look after linking db data
+  {% for student in students %}
+    <div class="grid-list">
+      <div>{{ student.first_name }}</div>
+      <div>{{ student.last_name }}</div>
+      <div>{{ student.uin }}</div>
+    </div>
+  {% endfor %}
+  --------->
+
   <div class="grid-list">
     <div>Fake</div>
     <div>Data</div>
     <div>Not a UIN</div>
   </div>
 
-  <!-- <h1>TESTING ON INDEX.HTML</h1>
-  {% for student in students %}
-    <h1> {{ student.first_name }} </h1> <br>
-    <h1> {{ student.last_name }} </h1> <br>
-  {% endfor %} -->
+
+
 
 </div>
 {% endblock %}

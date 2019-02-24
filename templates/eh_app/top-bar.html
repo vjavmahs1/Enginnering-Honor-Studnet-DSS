@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="page-header">
-      <img src="{% static "img/engineering-logo.jpg" %}">
+      <a href="{% url 'home' %}"><img src="{% static "img/engineering-logo.jpg" %}"></a>
       <div class="top-left">
         {% if user.is_authenticated %}
           <p class="top-menu">Hello {{ user.username }} </p>
