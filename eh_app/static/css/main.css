@@ -20,13 +20,17 @@ html{
 
 .index-content{
   font-family: arial;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
 }
 
 /*.grid-list-header{
     display: grid;
-    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 8% 10% 14% 10% 10% 15% 15% 15%;
+    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 6% 10% 14% 10% 10% 10% 10% 15%;
     color: white;
-    margin-left: 8%;
+    margin-left: 3%;
     font-size: 12px;
 }
 
@@ -38,8 +42,8 @@ html{
 
 .grid-list{
     display: grid;
-    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 8% 10% 14% 10% 10% 15% 15% 15%;
-    margin-left: 8%;
+    grid-template-columns: 10% 15% 10% 12% 20% 8% 8% 6% 10% 14% 10% 10% 10% 10% 15%;
+    margin-left: 3%;
 }
 
 .grid-list div{
@@ -49,14 +53,16 @@ html{
     color: white;
 }*/
 
-.student-list-content{
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  text-align: center;
+.student-list-content a{
+  text-decoration: none;
+  color: inherit;
 }
 
-.student-list-content a{
+.student-list-content{
+  margin-left: 3%;
+}
+
+.index-content a{
   text-decoration: none;
   color: inherit;
 }
