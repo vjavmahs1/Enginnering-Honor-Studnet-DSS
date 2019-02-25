@@ -1,6 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import StudentSemesterStatus
+from .models import Semester, StudentSemesterStatus
+from .custom_signals import new_current_semester
 
 @receiver(post_save, sender=StudentSemesterStatus)
 def fill_in_overall_fields(sender, instance, created, raw, *args, **kwargs):
@@ -15,3 +16,7 @@ def fill_in_overall_fields(sender, instance, created, raw, *args, **kwargs):
         instance.previous_status = prd.status
 
         instance.save()
+
+@receiver(new_current_semester, sender=Semester)
+def finalize_semester_statuses(sender, new_current_sem, *args, **kwargs):
+    pass
