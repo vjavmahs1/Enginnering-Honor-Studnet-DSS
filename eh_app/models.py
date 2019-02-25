@@ -120,7 +120,7 @@ class Requirement(_BaseTimestampModel):
 
 class Research(_BaseTimestampModel):
     # id autogen
-    program = models.CharField(max_length=10, default=None, null=True)
+    program = models.CharField(max_length=40, default=None, null=True)
     details = models.TextField(max_length=255, default=None, null=True)
 
     # Relations
