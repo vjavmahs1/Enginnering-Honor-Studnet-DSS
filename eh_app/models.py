@@ -5,7 +5,7 @@
 # FIXME: refactor of all activity based items
 
 from django.db import models
-from .querysets import GPAStatusQueryset, SemesterQueryset
+from .querysets import GPAStatusQueryset, SemesterQueryset, StudentSectionEnrollmentQueryset
 
 class _BaseTimestampModel(models.Model):
     class Meta:
@@ -167,11 +167,9 @@ class Semester(_BaseTimestampModel):
 
     objects = SemesterQueryset.as_manager()
 
-    def current_semester(self):
-        return self.successor == None and self.predecessor != None
-
-    def past_semester(self):
-        return self.successor != None
+    # Is contained in semester chain and is less than current semester
+    def past(self):
+        return self.successor and self.id < Semester.objects.get_current().id
 
     # TODO: Creating a new current semester should trigger calculation of status elements for the newly elapsed semester
 
@@ -294,25 +292,26 @@ class StudentResearch(_BaseTimestampModel):
 # Essentially a history element
 class StudentSectionEnrollment(_BaseTimestampModel):
     # id autogen
-    # TODO: On finalize these fields need to have been set correctly
-    grade = models.CharField(max_length=2, default=None, null=True)
-    grading_mode = models.CharField(max_length=10, default=None, null=True) # s/u
+    grade = models.CharField(max_length=2, default=None, null=True) # A,B,C,D,F,F*,I
+    grading_mode = models.CharField(max_length=10, default=None, null=True) # s/u   TODO: How do points work with s/u?
     repeat = models.CharField(max_length=10, default=None, null=True)
 
     # Relations
-    section = models.ForeignKey('Section', on_delete=None)
-    student = models.ForeignKey('Student', on_delete=None)
-    relevant_status = models.ForeignKey(
-        'StudentSemesterStatus',
-        related_name='section_enrollments_set',
-        on_delete=None,
-    )
+    section = models.ForeignKey('Section', related_name='section_enrollment_set', on_delete=None)
+    student = models.ForeignKey('Student', related_name='enrolled_section_set', on_delete=None)
+
+    objects = StudentSectionEnrollmentQueryset.as_manager()
 
     def semester(self):
         return self.section.semester
 
     def credits(self):
         return self.section.course.credits
+
+    # Is enrollment filled out?
+    # Must be valid on semester change
+    def valid(self): # pragma: no cover
+        return self.grade or self.grading_mode
 
 # Finalized for each student on the turn of a semester
 # History element to track eh status by semester

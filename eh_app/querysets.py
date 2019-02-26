@@ -31,3 +31,7 @@ class SemesterQueryset(models.QuerySet):
 
     def get_current(self):
         return self.current().get()
+
+class StudentSectionEnrollmentQueryset(models.QuerySet):
+    def current(self, *args, **kwargs):
+        return self.filter(section__semester__current=True, *args, **kwargs)
