@@ -28,14 +28,7 @@ class GPAStatusTestCase(TestCase):
 class SemesterTestCase(TestCase):
     fixtures = ['test_seed']
 
-    def test_current_queryset(self):
-        sem = Semester.objects.get_current()
-        self.assertEqual(sem.semester, 'Spring')
-        self.assertEqual(sem.academic_year, '2018-2019')
-        self.assertTrue(sem.current_semester())
-        self.assertFalse(sem.past_semester())
-
-    def test_new_current(self):
+    def test_new_current_queryset(self):
         # Where a semester is created newly
         Semester.objects.new_current(id=201921)
         self.assertEqual(Semester.objects.get_current().id, 201921)
@@ -48,8 +41,8 @@ class SemesterTestCase(TestCase):
 
     def test_past_semester(self):
         sem = Semester.objects.get(id=201831)
-        self.assertTrue(sem.past_semester())
-        self.assertFalse(sem.current_semester())
+        self.assertTrue(sem.past())
+        self.assertFalse(sem.current)
 
 class StudentTestCase(TestCase):
     fixtures = ['test_seed', 'GPADeficiency']
@@ -98,6 +91,10 @@ class StudentSectionEnrollmentTestCase(TestCase):
     def test_semester(self):
         student_enrollment = StudentSectionEnrollment.objects.get(id=1)
         self.assertEqual(student_enrollment.semester().semester, 'Spring')
+
+    def test_current_queryset(self):
+        student_enrollment = StudentSectionEnrollment.objects.current(student__uin=218009384)
+        self.assertEqual(student_enrollment.get().id, 1)
 
     def test_credits(self):
         student_enrollment = StudentSectionEnrollment.objects.get(id=1)

@@ -1,4 +1,5 @@
 from django.db import models
+from .custom_signals import new_current_semester
 
 class GPAStatusQueryset(models.QuerySet):
     def get_status(self, code, gpa):
@@ -24,7 +25,13 @@ class SemesterQueryset(models.QuerySet):
         new_current.current = True
         new_current.save()
 
+        new_current_semester.send_robust(sender=self.model, new_current_sem=new_current)
+
         return new_current
 
     def get_current(self):
         return self.current().get()
+
+class StudentSectionEnrollmentQueryset(models.QuerySet):
+    def current(self, *args, **kwargs):
+        return self.filter(section__semester__current=True, *args, **kwargs)
